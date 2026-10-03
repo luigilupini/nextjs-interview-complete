@@ -31,9 +31,8 @@ export default async function Page({
 	const { q } = await searchParams;
 	const query = q?.trim().toLowerCase() ?? "";
 
-	// PokeAPI has no name search, so fetch every name (cached) and filter here.
 	const results = query
-		? (await getPokemon(2000)).results.filter((p) => p.name.includes(query))
+		? (await getPokemon()).results.filter((p) => p.name.includes(query))
 		: (await getPokemon()).results;
 
 	if (results.length === 0) {
@@ -43,6 +42,7 @@ export default async function Page({
 	return (
 		<ul className="grid grid-cols-2 gap-4 md:grid-cols-4">
 			{results.map((p) => {
+				console.log(p);
 				const id = p.url.split("/").filter(Boolean).pop();
 				return (
 					<li key={p.name} className="card bg-base-100 p-4 capitalize">

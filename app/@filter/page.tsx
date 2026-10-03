@@ -1,4 +1,5 @@
-import { Search } from "./search";
+import Form from "next/form";
+import { SearchInput } from "./search-input";
 
 export default async function Page({
 	searchParams,
@@ -9,7 +10,10 @@ export default async function Page({
 
 	return (
 		<div className="container mx-auto max-w-6xl p-6 pb-0">
-			<Search defaultValue={q} />
+			{/* GET form: submitting navigates to /?q=... and the server re-renders */}
+			<Form action="/" replace>
+				<SearchInput defaultValue={q} />
+			</Form>
 		</div>
 	);
 }
