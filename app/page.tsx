@@ -1,8 +1,8 @@
-// 1, title: "Server-side data fetching here in children"
-// 2, title: "Streaming & error handling using a loading and error boundary file"
-// 3, title: "Debounced search placed in the filter route"
-// 4, title: "Pagination & filters"
-// 5, title: "Interactive list item into modal parallel route"
+// 1, title: "Server-side data fetching here in children - DONE"
+// 2, title: "Streaming & error handling using a loading and error boundary file - DONE"
+// 3, title: "Search placed in the @filter route"
+// 4, title: "Limit the number of Pokémon displayed in the @filter route"
+// 5, title: "Interactive list item into @modal showing the individual Pokémon"
 
 type PokemonListResponse = {
 	count: number;
