@@ -23,8 +23,22 @@ async function getPokemon(
 	return res.json();
 }
 
-export default async function Page() {
-	const { results } = await getPokemon();
+export default async function Page({
+	searchParams,
+}: {
+	searchParams: Promise<{ q?: string }>;
+}) {
+	const { q } = await searchParams;
+	const query = q?.trim().toLowerCase() ?? "";
+
+	// PokeAPI has no name search, so fetch every name (cached) and filter here.
+	const results = query
+		? (await getPokemon(2000)).results.filter((p) => p.name.includes(query))
+		: (await getPokemon()).results;
+
+	if (results.length === 0) {
+		return <p className="opacity-70">No Pokémon match “{q}”.</p>;
+	}
 
 	return (
 		<ul className="grid grid-cols-2 gap-4 md:grid-cols-4">
