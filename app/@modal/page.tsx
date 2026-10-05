@@ -7,9 +7,8 @@ export default async function Page({
 	searchParams: Promise<{ pokemon?: string; q?: string; limit?: string }>;
 }) {
 	const { pokemon, q, limit } = await searchParams;
-	if (!pokemon) return null; // nothing selected, no modal
+	if (!pokemon) return null;
 
-	// Build the URL ourselves from the name (never fetch a URL taken from the query string).
 	const url = `https://pokeapi.co/api/v2/pokemon/${encodeURIComponent(pokemon.toLowerCase())}`;
 	const res = await fetch(url, { next: { revalidate: 3600 } });
 	const data = res.ok
@@ -18,8 +17,7 @@ export default async function Page({
 
 	const image: string | null =
 		data.sprites?.other?.["official-artwork"]?.front_default ??
-		data.sprites?.front_default ??
-		null;
+		data.sprites?.front_default;
 
 	// Closing keeps the search + limit but drops ?pokemon=
 	const closeHref = { query: { q, limit } };
@@ -41,12 +39,7 @@ export default async function Page({
 					{JSON.stringify({ url, image, data }, null, 2)}
 				</pre>
 			</div>
-			<Link
-				href={closeHref}
-				scroll={false}
-				className="modal-backdrop"
-				aria-label="Close"
-			/>
+			<Link href={closeHref} scroll={false} className="modal-backdrop" />
 		</div>
 	);
 }
