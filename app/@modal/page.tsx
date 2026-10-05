@@ -1,6 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
 
+async function getPokemon(name: string) {
+	const url = `https://pokeapi.co/api/v2/pokemon/${encodeURIComponent(name.toLowerCase())}`;
+	const res = await fetch(url, { next: { revalidate: 3600 } }); // cache for 1h
+	const data = res.ok
+		? await res.json()
+		: { error: `${res.status} ${res.statusText}` };
+	return { url, data };
+}
+
 export default async function Page({
 	searchParams,
 }: {
@@ -9,11 +18,7 @@ export default async function Page({
 	const { pokemon, q, limit } = await searchParams;
 	if (!pokemon) return null;
 
-	const url = `https://pokeapi.co/api/v2/pokemon/${encodeURIComponent(pokemon.toLowerCase())}`;
-	const res = await fetch(url, { next: { revalidate: 3600 } });
-	const data = res.ok
-		? await res.json()
-		: { error: `${res.status} ${res.statusText}` };
+	const { url, data } = await getPokemon(pokemon);
 
 	const image: string | null =
 		data.sprites?.other?.["official-artwork"]?.front_default ??

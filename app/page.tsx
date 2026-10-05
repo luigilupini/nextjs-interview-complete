@@ -11,7 +11,7 @@ type PokemonListResponse = {
 	results: { name: string; url: string }[];
 };
 
-async function getPokemon(limit = 20): Promise<PokemonListResponse> {
+async function getPokemons(limit = 20): Promise<PokemonListResponse> {
 	const res = await fetch(
 		`https://pokeapi.co/api/v2/pokemon?limit=${limit}`,
 		{ next: { revalidate: 3600 } }, // cache for 1h
@@ -30,7 +30,7 @@ export default async function Page({
 
 	// PokeAPI has no name search, so fetch every name (cached for 1h),
 	// filter by the query (an empty query matches everything), then apply the limit.
-	const { results: data } = await getPokemon(2000);
+	const { results: data } = await getPokemons(2000);
 	const matches = data.filter((p) => p.name.includes(query));
 	const results = matches.slice(0, Number(limit));
 	const total = matches.length;
