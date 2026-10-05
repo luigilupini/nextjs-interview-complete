@@ -1,15 +1,9 @@
 // @ts-expect-error Next.js handles CSS imports at build time.
 import "./globals.css";
-import type { Metadata } from "next";
 
 import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-	title: "Next.js Interview",
-	description: "Next.js App using PokéAPI",
-};
 
 export default function RootLayout({
 	filter,
