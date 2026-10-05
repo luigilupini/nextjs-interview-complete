@@ -1,10 +1,7 @@
 "use client";
 
-import { useRef } from "react";
-
-// Submits the parent <Form> 300ms after the user stops typing.
+// Solution 3: Setup search input filter
 export function SearchInput({ defaultValue }: { defaultValue: string }) {
-	const timeout = useRef<ReturnType<typeof setTimeout>>(undefined);
 	return (
 		<input
 			type="search"
@@ -14,8 +11,7 @@ export function SearchInput({ defaultValue }: { defaultValue: string }) {
 			className="input input-bordered w-full max-w-xs"
 			onChange={(e) => {
 				const form = e.currentTarget.form;
-				clearTimeout(timeout.current);
-				timeout.current = setTimeout(() => form?.requestSubmit(), 300);
+				form?.requestSubmit();
 			}}
 		/>
 	);

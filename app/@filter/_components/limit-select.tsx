@@ -1,6 +1,6 @@
 "use client";
 
-// Submits the parent <Form> as soon as a new limit is picked.
+// Solution 3: Setup limit select filter
 export function LimitSelect({ defaultValue }: { defaultValue: string }) {
 	return (
 		<select

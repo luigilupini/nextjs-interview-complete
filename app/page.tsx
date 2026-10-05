@@ -1,9 +1,3 @@
-// 1, title: "Server-side data fetching here in children - DONE"
-// 2, title: "Streaming & error handling using a loading and error boundary file - DONE"
-// 3, title: "Search placed in the @filter route"
-// 4, title: "Limit the number of Pokémon displayed in the @filter route"
-// 5, title: "Interactive list item into @modal showing the individual Pokémon"
-
 import Link from "next/link";
 
 type PokemonListResponse = {
@@ -20,6 +14,7 @@ async function getPokemons(limit = 20): Promise<PokemonListResponse> {
 	return res.json();
 }
 
+// Solution 1: Server-side data fetching here in children
 export default async function Page({
 	searchParams,
 }: {

@@ -1,4 +1,5 @@
-export default function Loading() {
+// Solution 2: Streaming & error handling using a loading and error boundary file
+export default function RootLoading() {
 	return (
 		<section className="space-y-4">
 			<div className="skeleton h-8 w-48" />

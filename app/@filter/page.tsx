@@ -1,12 +1,12 @@
 import Form from "next/form";
-import { LimitSelect } from "./limit-select";
-import { SearchInput } from "./search-input";
+import { LimitSelect } from "./_components/limit-select";
+import { SearchInput } from "./_components/search-input";
 
-export default async function Page({
-	searchParams,
-}: {
+type Props = {
 	searchParams: Promise<{ q?: string; limit?: string }>;
-}) {
+};
+
+export default async function Page({ searchParams }: Props) {
 	const { q = "", limit = "20" } = await searchParams;
 
 	return (

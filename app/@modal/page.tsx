@@ -7,18 +7,20 @@ async function getPokemon(name: string) {
 	const data = res.ok
 		? await res.json()
 		: { error: `${res.status} ${res.statusText}` };
-	return { url, data };
+	return { data };
 }
 
-export default async function Page({
-	searchParams,
-}: {
+type Props = {
 	searchParams: Promise<{ pokemon?: string; q?: string; limit?: string }>;
-}) {
+};
+
+// Solution 4: Displaying individual Pokémon details
+export default async function Page({ searchParams }: Props) {
 	const { pokemon, q, limit } = await searchParams;
+
 	if (!pokemon) return null;
 
-	const { url, data } = await getPokemon(pokemon);
+	const { data } = await getPokemon(pokemon);
 
 	const image: string | null =
 		data.sprites?.other?.["official-artwork"]?.front_default ??
@@ -41,7 +43,7 @@ export default async function Page({
 				<Image src={image ?? ""} alt={pokemon} width={300} height={300} />
 				{/* Temporary: dump everything */}
 				<pre className="max-h-[70vh] overflow-auto rounded bg-base-200 p-4 font-mono text-xs">
-					{JSON.stringify({ url, image, data }, null, 2)}
+					{JSON.stringify({ data }, null, 2)}
 				</pre>
 			</div>
 			<Link href={closeHref} scroll={false} className="modal-backdrop" />
