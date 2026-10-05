@@ -6,11 +6,11 @@ import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
-	filter,
+	header,
 	children,
 	modal,
 }: {
-	filter: React.ReactNode;
+	header: React.ReactNode;
 	children: React.ReactNode;
 	modal: React.ReactNode;
 }) {
@@ -19,7 +19,7 @@ export default function RootLayout({
 			<body
 				className={`${inter.className} min-h-screen bg-base-200 text-base-content`}
 			>
-				<header>{filter}</header>
+				{header}
 				<main className="container mx-auto max-w-6xl space-y-8 p-6">
 					{children}
 				</main>
