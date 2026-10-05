@@ -41,15 +41,14 @@ export default async function Page({ searchParams }: Props) {
 				{results.map((p) => {
 					const id = p.url.split("/").filter(Boolean).pop();
 					return (
-						<li key={p.name}>
-							<Link
-								href={{ query: { q, limit, pokemon: p.name } }}
-								scroll={false}
-								className="card block bg-base-100 p-4 capitalize hover:shadow-md"
-							>
-								#{id} {p.name}
-							</Link>
-						</li>
+						<Link
+							key={p.name}
+							href={{ query: { q, limit, pokemon: p.name } }}
+							scroll={false}
+							className="card block bg-base-100 p-4 capitalize hover:shadow-md"
+						>
+							#{id} {p.name}
+						</Link>
 					);
 				})}
 			</ul>
