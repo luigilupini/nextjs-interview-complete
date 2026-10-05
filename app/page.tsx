@@ -4,6 +4,7 @@
 // 4, title: "Limit the number of Pokémon displayed in the @filter route"
 // 5, title: "Interactive list item into @modal showing the individual Pokémon"
 
+import Link from "next/link";
 import { parseLimit } from "@/lib/limit";
 
 type PokemonListResponse = {
@@ -49,8 +50,14 @@ export default async function Page({
 				{results.map((p) => {
 					const id = p.url.split("/").filter(Boolean).pop();
 					return (
-						<li key={p.name} className="card bg-base-100 p-4 capitalize">
-							#{id} {p.name}
+						<li key={p.name}>
+							<Link
+								href={{ query: { q, limit, pokemon: p.name } }}
+								scroll={false}
+								className="card block bg-base-100 p-4 capitalize hover:shadow-md"
+							>
+								#{id} {p.name}
+							</Link>
 						</li>
 					);
 				})}
