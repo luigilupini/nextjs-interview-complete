@@ -23,8 +23,6 @@ export default async function Page({
 	const { q, limit = "20" } = await searchParams;
 	const query = q?.trim().toLowerCase() ?? "";
 
-	// PokeAPI has no name search, so fetch every name (cached for 1h),
-	// filter by the query (an empty query matches everything), then apply the limit.
 	const { results: data } = await getPokemons(2000);
 	const matches = data.filter((p) => p.name.includes(query));
 	const results = matches.slice(0, Number(limit));
