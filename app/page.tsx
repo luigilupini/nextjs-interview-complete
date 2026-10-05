@@ -24,6 +24,8 @@ export default async function Page({ searchParams }: Props) {
 	const query = q?.trim().toLowerCase() ?? "";
 
 	const { results: data } = await getPokemons(2000);
+
+	// Part of Question 3 to use the filtered data.
 	const matches = data.filter((p) => p.name.includes(query));
 	const results = matches.slice(0, Number(limit));
 	const total = matches.length;
