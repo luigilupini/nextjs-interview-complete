@@ -41,10 +41,22 @@ export default async function Page({ searchParams }: Props) {
 				</Link>
 				<h2 className="mb-4 text-xl font-bold capitalize">{pokemon}</h2>
 				<Image src={image ?? ""} alt={pokemon} width={300} height={300} />
-				{/* Temporary: dump everything */}
-				<pre className="max-h-[70vh] overflow-auto rounded bg-base-200 p-4 font-mono text-xs">
-					{JSON.stringify({ data }, null, 2)}
-				</pre>
+
+				<div className="join join-vertical mt-4 w-full">
+					{Object.entries(data).map(([key, value]) => (
+						<details
+							key={key}
+							className="collapse collapse-arrow join-item border border-base-300 bg-base-100"
+						>
+							<summary className="collapse-title font-semibold">{key}</summary>
+							<div className="collapse-content">
+								<pre className="max-h-80 overflow-auto rounded bg-base-200 p-2 font-mono text-xs">
+									{JSON.stringify(value, null, 2)}
+								</pre>
+							</div>
+						</details>
+					))}
+				</div>
 			</div>
 			<Link href={closeHref} scroll={false} className="modal-backdrop" />
 		</div>
