@@ -14,12 +14,12 @@ async function getPokemons(limit = 20): Promise<PokemonListResponse> {
 	return res.json();
 }
 
-// Solution 1: Server-side data fetching here in children
-export default async function Page({
-	searchParams,
-}: {
+type Props = {
 	searchParams: Promise<{ q?: string; limit?: string }>;
-}) {
+};
+
+// Solution 1: Server-side data fetching here in children
+export default async function Page({ searchParams }: Props) {
 	const { q, limit = "20" } = await searchParams;
 	const query = q?.trim().toLowerCase() ?? "";
 
