@@ -5,7 +5,6 @@
 // 5, title: "Interactive list item into @modal showing the individual Pokémon"
 
 import Link from "next/link";
-import { parseLimit } from "@/lib/limit";
 
 type PokemonListResponse = {
 	count: number;
@@ -26,15 +25,14 @@ export default async function Page({
 }: {
 	searchParams: Promise<{ q?: string; limit?: string }>;
 }) {
-	const { q, limit: rawLimit } = await searchParams;
+	const { q, limit = "20" } = await searchParams;
 	const query = q?.trim().toLowerCase() ?? "";
-	const limit = parseLimit(rawLimit);
 
 	// PokeAPI has no name search, so fetch every name (cached for 1h),
 	// filter by the query (an empty query matches everything), then apply the limit.
 	const { results: data } = await getPokemon(2000);
 	const matches = data.filter((p) => p.name.includes(query));
-	const results = matches.slice(0, limit);
+	const results = matches.slice(0, Number(limit));
 	const total = matches.length;
 
 	if (results.length === 0) {

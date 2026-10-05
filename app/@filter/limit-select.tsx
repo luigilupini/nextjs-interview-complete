@@ -1,22 +1,18 @@
 "use client";
 
-import { LIMIT_OPTIONS } from "@/lib/limit";
-
 // Submits the parent <Form> as soon as a new limit is picked.
-export function LimitSelect({ defaultValue }: { defaultValue: number }) {
+export function LimitSelect({ defaultValue }: { defaultValue: string }) {
 	return (
 		<select
 			name="limit"
 			defaultValue={defaultValue}
-			aria-label="Number of Pokémon to show"
 			className="select select-bordered w-auto"
 			onChange={(e) => e.currentTarget.form?.requestSubmit()}
 		>
-			{LIMIT_OPTIONS.map((n) => (
-				<option key={n} value={n}>
-					Show {n}
-				</option>
-			))}
+			<option value="10">Show 10</option>
+			<option value="20">Show 20</option>
+			<option value="50">Show 50</option>
+			<option value="100">Show 100</option>
 		</select>
 	);
 }

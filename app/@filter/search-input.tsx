@@ -11,7 +11,6 @@ export function SearchInput({ defaultValue }: { defaultValue: string }) {
 			name="q"
 			defaultValue={defaultValue}
 			placeholder="Search Pokémon..."
-			aria-label="Search Pokémon"
 			className="input input-bordered w-full max-w-xs"
 			onChange={(e) => {
 				const form = e.currentTarget.form;
