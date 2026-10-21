@@ -31,7 +31,7 @@ export default async function Page({ searchParams }: Props) {
 
 	return (
 		<div className="modal modal-open">
-			<div className="modal-box max-w-3xl">
+			<div className="modal-box max-w-3xl max-h-11/12">
 				<Link
 					href={closeHref}
 					scroll={false}
@@ -48,7 +48,7 @@ export default async function Page({ searchParams }: Props) {
 							key={key}
 							className="collapse collapse-arrow join-item border border-base-300 bg-base-100"
 						>
-							<summary className="collapse-title font-semibold">{key}</summary>
+							<summary className="collapse-title font-medium">{key}</summary>
 							<div className="collapse-content">
 								<pre className="max-h-80 overflow-auto rounded bg-base-200 p-2 font-mono text-xs">
 									{JSON.stringify(value, null, 2)}

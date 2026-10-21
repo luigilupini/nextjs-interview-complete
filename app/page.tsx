@@ -5,7 +5,7 @@ type PokemonListResponse = {
 	results: { name: string; url: string }[];
 };
 
-async function getPokemons(limit = 20): Promise<PokemonListResponse> {
+async function getPokemonList(limit = 20): Promise<PokemonListResponse> {
 	const res = await fetch(
 		`https://pokeapi.co/api/v2/pokemon?limit=${limit}`,
 		{ next: { revalidate: 3600 } }, // cache for 1h
@@ -23,7 +23,7 @@ export default async function Page({ searchParams }: Props) {
 	const { q, limit = "20" } = await searchParams;
 	const query = q?.trim().toLowerCase() ?? "";
 
-	const { results: data } = await getPokemons(2000);
+	const { results: data } = await getPokemonList(2000);
 
 	// Part of Question 3 to use the filtered data.
 	const matches = data.filter((p) => p.name.includes(query));

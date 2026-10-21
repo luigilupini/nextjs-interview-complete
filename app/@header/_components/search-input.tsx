@@ -8,7 +8,7 @@ export function SearchInput({ defaultValue }: { defaultValue: string }) {
 			name="q"
 			defaultValue={defaultValue}
 			placeholder="Search Pokémon..."
-			className="input input-bordered w-full max-w-xs"
+			className="input input-bordered max-w-xs"
 			onChange={(e) => {
 				const form = e.currentTarget.form;
 				form?.requestSubmit();

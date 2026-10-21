@@ -1,9 +1,7 @@
-// @ts-expect-error Next.js handles CSS imports at build time.
-import "./globals.css";
+import "@/styles/globals.css";
 
-import { Inter } from "next/font/google";
-
-const inter = Inter({ subsets: ["latin"] });
+import { Providers } from "@/context/providers";
+import { jetbrains, rubik } from "@/fonts";
 
 export default function RootLayout({
 	header,
@@ -15,15 +13,19 @@ export default function RootLayout({
 	modal: React.ReactNode;
 }) {
 	return (
-		<html lang="en">
+		<html lang="en" className="h-full" suppressHydrationWarning>
 			<body
-				className={`${inter.className} min-h-screen bg-base-200 text-base-content`}
+				className={`${rubik.variable} ${jetbrains.variable} flex h-full flex-col bg-base-200 text-base-content font-sans`}
 			>
-				{header}
-				<main className="container mx-auto max-w-6xl space-y-8 p-6">
-					{children}
-				</main>
-				{modal}
+				<Providers>
+					{header}
+					<main className="flex-1 overflow-y-auto">
+						<div className="container mx-auto max-w-6xl space-y-8 p-6">
+							{children}
+						</div>
+					</main>
+					{modal}
+				</Providers>
 			</body>
 		</html>
 	);

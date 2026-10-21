@@ -6,7 +6,7 @@ export function LimitSelect({ defaultValue }: { defaultValue: string }) {
 		<select
 			name="limit"
 			defaultValue={defaultValue}
-			className="select select-bordered w-auto"
+			className="select select-bordered w-40"
 			onChange={(e) => e.currentTarget.form?.requestSubmit()}
 		>
 			<option value="10">Show 10</option>
