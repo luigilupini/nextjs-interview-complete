@@ -4,10 +4,10 @@ import Link from "next/link";
 import type { Recipe } from "@/lib/schemas/recipe";
 
 async function getRecipe(id: string): Promise<Recipe | null> {
-	const res = await fetch(
+	const url = new URL(
 		`https://dummyjson.com/recipes/${encodeURIComponent(id)}`,
-		{ next: { revalidate: 3600 } }, // cache for 1h
 	);
+	const res = await fetch(url, { next: { revalidate: 3600 } });
 	if (!res.ok) throw new Error("Failed to fetch recipe");
 	return res.json();
 }
