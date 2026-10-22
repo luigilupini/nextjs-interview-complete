@@ -24,9 +24,8 @@ async function getRecipe(id: string): Promise<Recipe | null> {
 		`https://dummyjson.com/recipes/${encodeURIComponent(id)}`,
 		{ next: { revalidate: 3600 } }, // cache for 1h
 	);
-	if (!res.ok) return null;
-	const data = await res.json();
-	return data as Recipe;
+	if (!res.ok) throw new Error("Failed to fetch recipe");
+	return res.json();
 }
 
 type Props = {
