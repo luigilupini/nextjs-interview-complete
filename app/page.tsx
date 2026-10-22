@@ -35,7 +35,7 @@ export default async function Page({ searchParams }: Props) {
 			</p>
 
 			<ul className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-				{recipes.map((r, i) => (
+				{recipes.map((r) => (
 					<li key={r.id}>
 						<Link
 							href={{ query: { q, limit, recipe: r.id } }}
@@ -68,7 +68,7 @@ export default async function Page({ searchParams }: Props) {
 									width={200}
 									height={200}
 									className="aspect-square object-cover size-20 rounded-md"
-									priority={i < 3}
+									priority
 								/>
 							</div>
 						</Link>
