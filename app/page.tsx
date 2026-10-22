@@ -56,7 +56,7 @@ export default async function Page({ searchParams }: Props) {
 					<li key={r.id}>
 						<Link
 							href={{ query: { q, limit, recipe: r.id } }}
-							prefetch={true}
+							prefetch
 							scroll={false}
 							className="card h-full bg-base-100 hover:shadow-xs ring-1 ring-inset ring-base-content/10 overflow-hidden"
 						>

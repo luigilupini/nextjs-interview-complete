@@ -9,10 +9,9 @@ export const ThemeSwitch = () => {
 	useEffect(() => setMounted(true), []);
 
 	return (
-		<label className="swap swap-rotate btn btn-primary btn-soft btn-md btn-square">
+		<label className="swap swap-rotate btn btn-primary btn-soft btn-md btn-square hover:shadow-none">
 			<input
 				type="checkbox"
-				aria-label="Toggle dark mode"
 				checked={mounted && resolvedTheme === "dark"}
 				disabled={!mounted}
 				onChange={(e) => setTheme(e.target.checked ? "dark" : "light")}

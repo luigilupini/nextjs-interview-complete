@@ -50,7 +50,6 @@ export default async function Page({ searchParams }: Props) {
 				<Link
 					href={closeHref}
 					scroll={false}
-					aria-label="Close"
 					className="btn btn-ghost btn-sm absolute right-2 top-4 btn-square"
 				>
 					<X className="size-4" />
@@ -85,6 +84,7 @@ export default async function Page({ searchParams }: Props) {
 						width={800}
 						height={500}
 						className="aspect-video w-full rounded-box object-cover"
+						priority
 					/>
 
 					<div className="stats stats-vertical w-full bg-base-200 sm:stats-horizontal">
@@ -136,12 +136,7 @@ export default async function Page({ searchParams }: Props) {
 				</article>
 			</div>
 
-			<Link
-				href={closeHref}
-				scroll={false}
-				className="modal-backdrop"
-				aria-label="Close"
-			/>
+			<Link href={closeHref} scroll={false} className="modal-backdrop" />
 		</div>
 	);
 }
