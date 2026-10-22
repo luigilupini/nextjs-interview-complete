@@ -31,7 +31,7 @@ async function getRecipes({
 }: RecipeQuery): Promise<RecipeListResponse> {
 	const url = new URL("https://dummyjson.com/recipes/search");
 
-	url.searchParams.set("q", q.trim()); // API search is already case-insensitive
+	url.searchParams.set("q", q.trim());
 	url.searchParams.set("limit", String(limit));
 	url.searchParams.set("skip", String(skip));
 	url.searchParams.set("select", "id,name,difficulty,image,rating,reviewCount");
@@ -41,16 +41,14 @@ async function getRecipes({
 	return res.json();
 }
 
-type Props = {
-	searchParams: Promise<{ q?: string; limit?: string }>;
-};
+type Props = { searchParams: Promise<{ q?: string; limit?: string }> };
 
 // Solution 1: Convert client-side to server-side
 export default async function Page({ searchParams }: Props) {
-	const { q, limit = 20 } = await searchParams;
+	const { q, limit = "20" } = await searchParams;
 	const { recipes: results, total } = await getRecipes({
 		q,
-		limit: Number(limit) > 0 ? Number(limit) : 20, // API rejects NaN/negative
+		limit: Number(limit),
 	});
 
 	if (results.length === 0) {
@@ -66,6 +64,7 @@ export default async function Page({ searchParams }: Props) {
 			<p className="text-sm opacity-70">
 				Showing {results.length} of {total}
 			</p>
+
 			<ul className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
 				{results.map((r, i) => (
 					<li key={r.id}>
