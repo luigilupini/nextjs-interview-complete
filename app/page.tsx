@@ -68,7 +68,7 @@ export default async function Page({ searchParams }: Props) {
 									width={200}
 									height={200}
 									className="aspect-square object-cover size-20 rounded-md"
-									priority={i < 3} // only above-the-fold images; the rest lazy-load
+									priority={i < 3}
 								/>
 							</div>
 						</Link>
