@@ -1,4 +1,4 @@
-import { Bookmark, ChefHat, Map, MapPin, Star, X } from "lucide-react";
+import { Bookmark, ChefHat, MapPin, Star, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
