@@ -11,8 +11,8 @@ export default async function Page({ searchParams }: Props) {
 	const { q = "", limit = "20" } = await searchParams;
 
 	return (
-		<header className="z-10 shrink-0 border-b border-base-300 bg-base-200/80 backdrop-blur">
-			<div className="container mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-2 px-6 py-4">
+		<header className="z-10 shrink-0 border-b border-base-content/10 bg-base-200">
+			<div className="container mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-2 px-4 py-2">
 				{/* GET form: submitting navigates to /?q=...&limit=... and the server re-renders */}
 				<Form action="/" replace className="flex gap-2">
 					<SearchInput defaultValue={q} />

@@ -1,16 +1,29 @@
+import { Bookmark, Check, Eye, Hash, Slash, Star, View } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
-type PokemonListResponse = {
-	count: number;
-	results: { name: string; url: string }[];
+type Recipe = {
+	id: number;
+	name: string;
+	difficulty: "Easy" | "Medium" | "Hard";
+	image: string;
+	rating: number;
+	reviewCount: number;
 };
 
-async function getPokemonList(limit = 20): Promise<PokemonListResponse> {
+type RecipeListResponse = {
+	recipes: Recipe[];
+	total: number;
+	skip: number;
+	limit: number;
+};
+
+async function getAllRecipes(): Promise<RecipeListResponse> {
 	const res = await fetch(
-		`https://pokeapi.co/api/v2/pokemon?limit=${limit}`,
+		"https://dummyjson.com/recipes?limit=0&select=id,name,difficulty,image,rating,reviewCount",
 		{ next: { revalidate: 3600 } }, // cache for 1h
 	);
-	if (!res.ok) throw new Error("Failed to fetch Pokémon");
+	if (!res.ok) throw new Error("Failed to fetch recipes");
 	return res.json();
 }
 
@@ -18,20 +31,19 @@ type Props = {
 	searchParams: Promise<{ q?: string; limit?: string }>;
 };
 
-// Solution 1: Server-side data fetching here in children
+// Solution 1: Convert client-side to server-side
 export default async function Page({ searchParams }: Props) {
 	const { q, limit = "20" } = await searchParams;
 	const query = q?.trim().toLowerCase() ?? "";
 
-	const { results: data } = await getPokemonList(2000);
+	const { recipes } = await getAllRecipes();
 
-	// Part of Question 3 to use the filtered data.
-	const matches = data.filter((p) => p.name.includes(query));
+	const matches = recipes.filter((r) => r.name.toLowerCase().includes(query));
 	const results = matches.slice(0, Number(limit));
 	const total = matches.length;
 
 	if (results.length === 0) {
-		return <p className="opacity-70">No Pokémon match “{q}”.</p>;
+		return <p className="opacity-70">No recipes match “{q}”.</p>;
 	}
 
 	return (
@@ -39,20 +51,46 @@ export default async function Page({ searchParams }: Props) {
 			<p className="text-sm opacity-70">
 				Showing {results.length} of {total}
 			</p>
-			<ul className="grid grid-cols-2 gap-4 md:grid-cols-4">
-				{results.map((p) => {
-					const id = p.url.split("/").filter(Boolean).pop();
-					return (
+			<ul className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+				{results.map((r) => (
+					<li key={r.id}>
 						<Link
-							key={p.name}
-							href={{ query: { q, limit, pokemon: p.name } }}
+							href={{ query: { q, limit, recipe: r.id } }}
 							scroll={false}
-							className="card block bg-base-100 p-4 capitalize hover:shadow-md"
+							className="card h-full bg-base-100 hover:shadow-xs ring-1 ring-inset ring-base-content/10 overflow-hidden"
 						>
-							#{id} {p.name}
+							<div className="flex items-center justify-between gap-2 p-2">
+								<div className="flex flex-col justify-between size-full">
+									<div className="flex flex-col gap-0">
+										<h2 className="card-title text-sm">{r.name}</h2>
+										<p className="text-xs opacity-70">
+											Difficulty: {r.difficulty}
+										</p>
+									</div>
+									<div className="flex items-center gap-2 text-xs">
+										<span className="badge badge-outline text-xs badge-sm rounded-md gap-1 px-2 border-base-content/10">
+											<Star className="w-3 h-3" />
+											<span>{r.rating}</span>
+										</span>
+										<span className="badge badge-outline text-xs badge-sm rounded-md gap-1 px-2 border-base-content/10">
+											<Bookmark className="w-3 h-3" />
+											<span>{r.reviewCount}</span>
+										</span>
+									</div>
+								</div>
+
+								<Image
+									src={r.image}
+									alt={r.name}
+									width={200}
+									height={200}
+									className="aspect-square object-cover size-20 rounded-md"
+									priority
+								/>
+							</div>
 						</Link>
-					);
-				})}
+					</li>
+				))}
 			</ul>
 		</section>
 	);

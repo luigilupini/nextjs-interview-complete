@@ -1,4 +1,4 @@
-// Solution 2: Streaming & error handling using a loading and error boundary file
+// Solution 2: Handle loading with suspense boundary
 export default function RootLoading() {
 	return (
 		<section className="space-y-4">

@@ -14,7 +14,7 @@ type Props = {
 	searchParams: Promise<{ pokemon?: string; q?: string; limit?: string }>;
 };
 
-// Solution 4: Displaying individual Pokémon details
+// Solution 4: Displaying individual recipe detail
 export default async function Page({ searchParams }: Props) {
 	const { pokemon, q, limit } = await searchParams;
 
