@@ -56,6 +56,7 @@ export default async function Page({ searchParams }: Props) {
 					<li key={r.id}>
 						<Link
 							href={{ query: { q, limit, recipe: r.id } }}
+							prefetch={true}
 							scroll={false}
 							className="card h-full bg-base-100 hover:shadow-xs ring-1 ring-inset ring-base-content/10 overflow-hidden"
 						>
@@ -68,11 +69,11 @@ export default async function Page({ searchParams }: Props) {
 										</p>
 									</div>
 									<div className="flex items-center gap-2 text-xs">
-										<span className="badge badge-outline text-xs badge-sm rounded-md gap-1 px-2 border-base-content/10">
+										<span className="badge badge-primary badge-ghost text-xs badge-sm rounded-md gap-1 px-2">
 											<Star className="w-3 h-3" />
 											<span>{r.rating}</span>
 										</span>
-										<span className="badge badge-outline text-xs badge-sm rounded-md gap-1 px-2 border-base-content/10">
+										<span className="badge badge-primary badge-ghost text-xs badge-sm rounded-md gap-1 px-2">
 											<Bookmark className="w-3 h-3" />
 											<span>{r.reviewCount}</span>
 										</span>
