@@ -1,23 +1,7 @@
 import { Bookmark, ChefHat, MapPin, Star, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-
-type Recipe = {
-	id: number;
-	name: string;
-	ingredients: string[];
-	instructions: string[];
-	prepTimeMinutes: number;
-	cookTimeMinutes: number;
-	servings: number;
-	difficulty: "Easy" | "Medium" | "Hard";
-	cuisine: string;
-	caloriesPerServing: number;
-	image: string;
-	rating: number;
-	reviewCount: number;
-	mealType: string[];
-};
+import type { Recipe } from "@/lib/schemas/recipe";
 
 async function getRecipe(id: string): Promise<Recipe | null> {
 	const res = await fetch(

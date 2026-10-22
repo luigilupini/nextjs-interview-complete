@@ -1,42 +1,14 @@
 import { Bookmark, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import type { RecipeListResponse } from "@/lib/schemas/recipe";
 
-type Recipe = {
-	id: number;
-	name: string;
-	difficulty: "Easy" | "Medium" | "Hard";
-	image: string;
-	rating: number;
-	reviewCount: number;
-};
-
-type RecipeListResponse = {
-	recipes: Recipe[];
-	total: number;
-	skip: number;
-	limit: number;
-};
-
-type RecipeQuery = {
-	q?: string;
-	limit?: number;
-	skip?: number;
-};
-
-async function getRecipes({
-	q = "",
-	limit = 20,
-	skip = 0,
-}: RecipeQuery): Promise<RecipeListResponse> {
+async function getRecipes(q = "", limit = 20): Promise<RecipeListResponse> {
 	const url = new URL("https://dummyjson.com/recipes/search");
-
 	url.searchParams.set("q", q.trim());
 	url.searchParams.set("limit", String(limit));
-	url.searchParams.set("skip", String(skip));
-	url.searchParams.set("select", "id,name,difficulty,image,rating,reviewCount");
 
-	const res = await fetch(url, { next: { revalidate: 3600 } }); // cache for 1h
+	const res = await fetch(url, { next: { revalidate: 3600 } });
 	if (!res.ok) throw new Error("Failed to fetch recipes");
 	return res.json();
 }
@@ -46,12 +18,9 @@ type Props = { searchParams: Promise<{ q?: string; limit?: string }> };
 // Solution 1: Convert client-side to server-side
 export default async function Page({ searchParams }: Props) {
 	const { q, limit = "20" } = await searchParams;
-	const { recipes: results, total } = await getRecipes({
-		q,
-		limit: Number(limit),
-	});
+	const { recipes, total } = await getRecipes(q, Number(limit));
 
-	if (results.length === 0) {
+	if (recipes.length === 0) {
 		return (
 			<p className="opacity-70">
 				{q ? `No recipes match “${q}”.` : "No recipes found."}
@@ -62,11 +31,11 @@ export default async function Page({ searchParams }: Props) {
 	return (
 		<section className="space-y-4">
 			<p className="text-sm opacity-70">
-				Showing {results.length} of {total}
+				Showing {recipes.length} of {total}
 			</p>
 
 			<ul className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-				{results.map((r, i) => (
+				{recipes.map((r, i) => (
 					<li key={r.id}>
 						<Link
 							href={{ query: { q, limit, recipe: r.id } }}

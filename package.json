@@ -8,7 +8,8 @@
 		"start": "next start",
 		"lint": "eslint .",
 		"typecheck": "tsc --noEmit",
-		"generate-types": "npx -y quicktype \"https://dummyjson.com/recipes?limit=0\" --lang ts --just-types --top-level RecipeListResponse -o lib/types/recipe.ts"
+		"generate-types": "npx -y quicktype \"https://dummyjson.com/recipes?limit=0\" --lang ts --just-types --top-level RecipeListResponse -o lib/types/recipe.ts",
+		"generate-schemas": "mkdir -p lib/schemas && npx -y quicktype \"https://dummyjson.com/recipes?limit=0\" --lang typescript-zod --top-level RecipeListResponse -o lib/schemas/recipe.ts"
 	},
 	"dependencies": {
 		"lucide-react": "^1.60.0",
