@@ -2,8 +2,10 @@ import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   images: {
-    // PokéAPI sprites / official artwork
-    remotePatterns: [{ protocol: 'https', hostname: 'raw.githubusercontent.com', pathname: '/PokeAPI/sprites/**' }],
+    // DummyJSON recipe images
+    remotePatterns: [
+      { protocol: 'https', hostname: 'cdn.dummyjson.com', pathname: '/recipe-images/**' },
+    ],
   },
 };
 
