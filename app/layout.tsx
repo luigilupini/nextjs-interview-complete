@@ -3,15 +3,13 @@ import "@/styles/globals.css";
 import { Providers } from "@/context/providers";
 import { jetbrains, rubik } from "@/fonts";
 
-export default function RootLayout({
-	header,
-	children,
-	modal,
-}: {
+type LayoutPage = Readonly<{
 	header: React.ReactNode;
 	children: React.ReactNode;
 	modal: React.ReactNode;
-}) {
+}>;
+
+export default function RootLayout({ header, children, modal }: LayoutPage) {
 	return (
 		<html lang="en" className="h-full" suppressHydrationWarning>
 			<body

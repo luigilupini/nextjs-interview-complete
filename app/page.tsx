@@ -30,7 +30,7 @@ export default async function Page({ searchParams }: Props) {
 
 	return (
 		<section className="space-y-4">
-			<p className="text-sm opacity-70">
+			<p className="text-sm opacity-70 px-1">
 				Showing {recipes.length} of {total}
 			</p>
 
