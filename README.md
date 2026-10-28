@@ -1,26 +1,26 @@
 # Next.js Interview Exercise: Recipes Browser
 
-A small [Next.js 15](https://nextjs.org/) (App Router, React 19) app that lists recipes from the public [DummyJSON Recipes API](https://dummyjson.com/docs/recipes). The candidate works through a set of exercises to refactor and extend it. Each exercise is marked in the code with `// Solution N`. Discussion prompts are marked with `// Question: Why is this not optimal?`.
+A small [Next.js 16](https://nextjs.org/) (App Router, React 19) app that lists recipes from the public [DummyJSON Recipes API](https://dummyjson.com/docs/recipes). The candidate works through a set of exercises to refactor and extend it. Each exercise is marked in the code with `// Solution N`. Discussion prompts are marked with `// Question: Why is this not optimal?`.
 
 ## Getting Started
 
 ```bash
-pnpm install
-pnpm dev        # http://localhost:3000
+npm install
+npm run dev     # http://localhost:3000
 ```
 
 Other scripts:
 
-| Script                  | Purpose                                                                     |
-| ----------------------- | --------------------------------------------------------------------------- |
-| `pnpm lint`             | ESLint                                                                      |
-| `pnpm typecheck`        | `tsc --noEmit`                                                              |
-| `pnpm generate-types`   | Generates TypeScript types from the live API into `lib/types/recipe.ts`     |
-| `pnpm generate-schemas` | Generates Zod schemas from the live API into `lib/schemas/recipe.ts`        |
+| Script                     | Purpose                                                                     |
+| -------------------------- | --------------------------------------------------------------------------- |
+| `npm run lint`             | ESLint                                                                      |
+| `npm run typecheck`        | `tsc --noEmit`                                                              |
+| `npm run generate-types`   | Generates TypeScript types from the live API into `lib/types/recipe.ts`     |
+| `npm run generate-schemas` | Generates Zod schemas from the live API into `lib/schemas/recipe.ts`        |
 
 ## Tech Stack
 
-- Next.js 15 (App Router, Server Components, `next/form`, parallel routes)
+- Next.js 16 (App Router, Server Components, `next/form`, parallel routes)
 - React 19
 - Tailwind CSS v4 + daisyUI 5
 - `next-themes` (light/dark switch)
@@ -84,7 +84,7 @@ Query params can be combined, for example `/recipes/search?q=pasta&limit=10`. Us
 - Remove `"use client"` and turn the page into an `async` Server Component.
 - Fetch recipes on the server from `GET /recipes` (or `/recipes/search` once filters exist).
 - `await searchParams` (it is a Promise in Next 15) and read `q` and `limit`.
-- Replace `any` with real types. Run `pnpm generate-types` and/or `pnpm generate-schemas` and use `RecipeListResponse` / `Recipe`. Optionally validate the response with Zod.
+- Replace `any` with real types. Run `npm run generate-types` and/or `npm run generate-schemas` and use `RecipeListResponse` / `Recipe`. Optionally validate the response with Zod.
 - Show the commented-out `Showing X of {total}` line using `total` from the response.
 
 **Interview questions:**
