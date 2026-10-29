@@ -16,7 +16,6 @@ Other scripts:
 | `npm run lint`             | ESLint                                                                      |
 | `npm run typecheck`        | `tsc --noEmit`                                                              |
 | `npm run generate-types`   | Generates TypeScript types from the live API into `lib/types/recipe.ts`     |
-| `npm run generate-schemas` | Generates Zod schemas from the live API into `lib/schemas/recipe.ts`        |
 
 ## Tech Stack
 
@@ -24,7 +23,6 @@ Other scripts:
 - React 19
 - Tailwind CSS v4 + daisyUI 5
 - `next-themes` (light/dark switch)
-- `zod` (runtime validation)
 - `lucide-react` (icons)
 
 ## Project Structure
@@ -33,7 +31,7 @@ Other scripts:
 app/
   layout.tsx          Root layout (fonts, providers, <main> container)
   page.tsx            Recipes list page            -> Exercises 1, 2
-  @header/page.tsx    Parallel-route header slot with the search/limit <Form>
+  @navbar/page.tsx    Parallel-route navbar slot with the search/limit <Form>
 components/
   search-input.tsx    Search box                   -> Exercise 3
   limit-select.tsx    Page size selector           -> Exercise 3
@@ -41,7 +39,6 @@ components/
   theme-switch.tsx    Light/dark toggle
 context/providers.tsx ThemeProvider wrapper
 lib/types/            Output of `generate-types` (empty to start)
-lib/schemas/          Output of `generate-schemas` (empty to start)
 ```
 
 ## The API
@@ -84,13 +81,13 @@ Query params can be combined, for example `/recipes/search?q=pasta&limit=10`. Us
 - Remove `"use client"` and turn the page into an `async` Server Component.
 - Fetch recipes on the server from `GET /recipes` (or `/recipes/search` once filters exist).
 - `await searchParams` (it is a Promise in Next 15) and read `q` and `limit`.
-- Replace `any` with real types. Run `npm run generate-types` and/or `npm run generate-schemas` and use `RecipeListResponse` / `Recipe`. Optionally validate the response with Zod.
+- Replace `any` with real types. Run `npm run generate-types` and use `RecipeListResponse` / `Recipe`.
 - Show the commented-out `Showing X of {total}` line using `total` from the response.
 
 **Interview questions:**
 1. *`useState<any>`: why is this not optimal?*
    - `any` turns off type safety. Typos in fields like `r.ratting` are not caught, and you get no autocomplete or refactor help.
-   - API data is untyped at runtime. Generated types give compile-time safety, and Zod gives runtime safety.
+   - API data is untyped at runtime. Generated types give compile-time safety, but nothing validates the response at runtime.
    - The three separate states (`recipes`, `loading`, `error`) can get out of sync with each other.
 2. *`useEffect` fetch: why is this not optimal?*
    - The page ships JS, renders an empty shell, hydrates, and only then fetches. This creates a client-server waterfall and makes LCP worse.
@@ -126,7 +123,7 @@ Query params can be combined, for example `/recipes/search?q=pasta&limit=10`. Us
 
 ### Exercise "Solution" 3: Search and limit filters
 
-**Where:** `components/search-input.tsx`, `components/limit-select.tsx`, and their usage in `app/@header/page.tsx`
+**Where:** `components/search-input.tsx`, `components/limit-select.tsx`, and their usage in `app/@navbar/page.tsx`
 
 **Current state:** Both inputs are inside a `next/form` `<Form action="/">`, but they have no `name` attributes, so nothing is submitted. Their `defaultValue`s are hard-coded (`""` and `"20"`) instead of coming from the URL.
 
@@ -143,7 +140,7 @@ Query params can be combined, for example `/recipes/search?q=pasta&limit=10`. Us
 - What do `replace` and `push` mean for history?
 - How would you debounce, and why should you?
 - How do you show pending UI during navigation? (`useTransition`, `useFormStatus`, `useLinkStatus`)
-- The layout does not render the `@header` slot. How do parallel routes work, and what is needed to show it? (Add a `header` prop to `layout.tsx` and probably a `default.tsx`.)
+- The layout does not render the `@navbar` slot. How do parallel routes work, and what is needed to show it? (Add a `navbar` prop to `layout.tsx` and probably a `default.tsx`.)
 - Validate and clamp `limit`. What if `?limit=abc` or `?limit=999999`?
 
 ---
@@ -180,4 +177,4 @@ Query params can be combined, for example `/recipes/search?q=pasta&limit=10`. Us
 - Caching strategy: `revalidate`, `unstable_cache` / `"use cache"`, tag-based revalidation.
 - Accessibility: input labels, `aria-label` on the select, focus states, meaningful `alt` text.
 - Tests: what would you unit test vs. e2e test here?
-- Type safety end to end: generated types vs. Zod schemas (`z.infer`), and where to validate.
+- Type safety end to end: generated types only give compile-time safety. Where (and how) would you validate at runtime?
