@@ -1,7 +1,7 @@
 import { Bookmark, ChefHat, MapPin, Star, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import type { Recipe } from "@/lib/schemas/recipe";
+import type { Recipe } from "@/lib/types/recipe";
 
 async function getRecipe(id: string): Promise<Recipe | null> {
 	const url = new URL(

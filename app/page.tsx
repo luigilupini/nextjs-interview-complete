@@ -1,7 +1,7 @@
 import { Bookmark, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import type { RecipeListResponse } from "@/lib/schemas/recipe";
+import type { RecipeListResponse } from "@/lib/types/recipe";
 
 async function getRecipes(q = "", limit = 20): Promise<RecipeListResponse> {
 	const url = new URL("https://dummyjson.com/recipes/search");
